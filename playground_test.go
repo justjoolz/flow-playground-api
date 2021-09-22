@@ -48,11 +48,13 @@ import (
 )
 
 type Project struct {
-	ID       string
-	Title    string
-	Seed     int
-	Persist  bool
-	Version  string
+	ID       	string
+	Title    	string
+	Description string
+	Title    	string
+	Seed     	int
+	Persist  	bool
+	Version  	string
 	Accounts []struct {
 		ID        string
 		Address   string
@@ -63,10 +65,12 @@ type Project struct {
 }
 
 const MutationCreateProject = `
-mutation($title: String!, $seed: Int!, $accounts: [String!], $transactionTemplates: [NewProjectTransactionTemplate!]) {
-  createProject(input: { title: $title, seed: $seed, accounts: $accounts, transactionTemplates: $transactionTemplates }) {
+mutation($title: String!, $description: String!, $readme: String!, $seed: Int!, $accounts: [String!], $transactionTemplates: [NewProjectTransactionTemplate!]) {
+  createProject(input: { title: $title, description: $description, readme: $readme, seed: $seed, accounts: $accounts, transactionTemplates: $transactionTemplates }) {
     id
     title
+	description
+	readme
     seed
     persist
     version

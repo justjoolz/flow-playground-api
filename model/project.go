@@ -34,6 +34,8 @@ type InternalProject struct {
 	PublicID                  uuid.UUID
 	ParentID                  *uuid.UUID
 	Title                     string
+	Description				  string
+	Readme					  string
 	Seed                      int
 	TransactionCount          int
 	TransactionExecutionCount int
@@ -53,13 +55,16 @@ func (p *InternalProject) IsOwnedBy(userID uuid.UUID) bool {
 // and marks it as mutable.
 func (p *InternalProject) ExportPublicMutable() *Project {
 	return &Project{
-		ID:       p.ID,
-		PublicID: p.PublicID,
-		ParentID: p.ParentID,
-		Persist:  p.Persist,
-		Seed:     p.Seed,
-		Version:  p.Version,
-		Mutable:  true,
+		ID:       		p.ID,
+		Title:			p.Title,
+		Description:	p.Description,
+		Readme:   		p.Readme,
+		PublicID: 		p.PublicID,
+		ParentID: 		p.ParentID,
+		Persist:  		p.Persist,
+		Seed:     		p.Seed,
+		Version:  		p.Version,
+		Mutable:  		true,
 	}
 }
 
@@ -68,12 +73,15 @@ func (p *InternalProject) ExportPublicMutable() *Project {
 func (p *InternalProject) ExportPublicImmutable() *Project {
 	return &Project{
 		ID:       p.ID,
-		PublicID: p.PublicID,
-		ParentID: p.ParentID,
-		Persist:  p.Persist,
-		Seed:     p.Seed,
-		Version:  p.Version,
-		Mutable:  false,
+		Title:			p.Title,
+		Description:	p.Description,
+		Readme:   		p.Readme,
+		PublicID: 		p.PublicID,
+		ParentID: 		p.ParentID,
+		Persist:  		p.Persist,
+		Seed:     		p.Seed,
+		Version:  		p.Version,
+		Mutable:  		false,
 	}
 }
 
@@ -93,6 +101,8 @@ func (p *InternalProject) Load(ps []datastore.Property) error {
 		PublicID                  string
 		ParentID                  *string
 		Title                     string
+		Description               string
+		Readme                    string
 		Seed                      int
 		TransactionCount          int
 		TransactionExecutionCount int
@@ -146,6 +156,8 @@ func (p *InternalProject) Load(ps []datastore.Property) error {
 	}
 
 	p.Title = tmp.Title
+	p.Description = tmp.Description
+	p.Readme = tmp.Readme
 	p.Seed = tmp.Seed
 	p.TransactionCount = tmp.TransactionCount
 	p.TransactionExecutionCount = tmp.TransactionExecutionCount
@@ -196,6 +208,14 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 			Value: p.Title,
 		},
 		{
+			Name:  "Description",
+			Value: p.Description,
+		},
+		{
+			Name:  "Readme",
+			Value: p.Readme,
+		},
+		{
 			Name:  "Seed",
 			Value: p.Seed,
 		},
@@ -235,14 +255,16 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 }
 
 type Project struct {
-	ID       uuid.UUID
-	PublicID uuid.UUID
-	ParentID *uuid.UUID
-	Seed     int
-	Version  *semver.Version
-	Title    string
-	Persist  bool
-	Mutable  bool
+	ID       	uuid.UUID
+	PublicID 	uuid.UUID
+	ParentID 	*uuid.UUID
+	Seed     	int
+	Version  	*semver.Version
+	Title    	string
+	Description	string
+	Readme		string
+	Persist  	bool
+	Mutable  	bool
 }
 
 type ProjectChildID struct {
