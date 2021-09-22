@@ -51,7 +51,7 @@ type Project struct {
 	ID       	string
 	Title    	string
 	Description string
-	Title    	string
+	Readme    	string
 	Seed     	int
 	Persist  	bool
 	Version  	string
