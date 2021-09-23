@@ -207,12 +207,12 @@ func (d *Datastore) UpdateProject(input model.UpdateProject, proj *model.Interna
 			proj.Title = *input.Title
 		}
 
-		if input.Title != nil {
-			proj.Title = *input.Title
+		if input.Description != nil {
+			proj.Description = *input.Description
 		}
 
-		if input.Title != nil {
-				proj.Title = *input.Title
+		if input.Readme != nil {
+				proj.Readme = *input.Readme
 		}
 
 
