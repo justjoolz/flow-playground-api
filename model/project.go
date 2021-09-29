@@ -34,8 +34,8 @@ type InternalProject struct {
 	PublicID                  uuid.UUID
 	ParentID                  *uuid.UUID
 	Title                     string
-	Description				  string
-	Readme					  string
+	Description               string
+	Readme                    string
 	Seed                      int
 	TransactionCount          int
 	TransactionExecutionCount int
@@ -55,16 +55,16 @@ func (p *InternalProject) IsOwnedBy(userID uuid.UUID) bool {
 // and marks it as mutable.
 func (p *InternalProject) ExportPublicMutable() *Project {
 	return &Project{
-		ID:       		p.ID,
-		Title:			p.Title,
-		Description:	p.Description,
-		Readme:   		p.Readme,
-		PublicID: 		p.PublicID,
-		ParentID: 		p.ParentID,
-		Persist:  		p.Persist,
-		Seed:     		p.Seed,
-		Version:  		p.Version,
-		Mutable:  		true,
+		ID:          p.ID,
+		Title:       p.Title,
+		Description: p.Description,
+		Readme:      p.Readme,
+		PublicID:    p.PublicID,
+		ParentID:    p.ParentID,
+		Persist:     p.Persist,
+		Seed:        p.Seed,
+		Version:     p.Version,
+		Mutable:     true,
 	}
 }
 
@@ -72,16 +72,16 @@ func (p *InternalProject) ExportPublicMutable() *Project {
 // and marks it as immutable.
 func (p *InternalProject) ExportPublicImmutable() *Project {
 	return &Project{
-		ID:       p.ID,
-		Title:			p.Title,
-		Description:	p.Description,
-		Readme:   		p.Readme,
-		PublicID: 		p.PublicID,
-		ParentID: 		p.ParentID,
-		Persist:  		p.Persist,
-		Seed:     		p.Seed,
-		Version:  		p.Version,
-		Mutable:  		false,
+		ID:          p.ID,
+		Title:       p.Title,
+		Description: p.Description,
+		Readme:      p.Readme,
+		PublicID:    p.PublicID,
+		ParentID:    p.ParentID,
+		Persist:     p.Persist,
+		Seed:        p.Seed,
+		Version:     p.Version,
+		Mutable:     false,
 	}
 }
 
@@ -255,16 +255,16 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 }
 
 type Project struct {
-	ID       	uuid.UUID
-	PublicID 	uuid.UUID
-	ParentID 	*uuid.UUID
-	Seed     	int
-	Version  	*semver.Version
-	Title    	string
-	Description	string
-	Readme		string
-	Persist  	bool
-	Mutable  	bool
+	ID          uuid.UUID
+	PublicID    uuid.UUID
+	ParentID    *uuid.UUID
+	Seed        int
+	Version     *semver.Version
+	Title       string
+	Description string
+	Readme      string
+	Persist     bool
+	Mutable     bool
 }
 
 type ProjectChildID struct {

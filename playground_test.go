@@ -48,14 +48,14 @@ import (
 )
 
 type Project struct {
-	ID       	string
-	Title    	string
+	ID          string
+	Title       string
 	Description string
-	Readme    	string
-	Seed     	int
-	Persist  	bool
-	Version  	string
-	Accounts []struct {
+	Readme      string
+	Seed        int
+	Persist     bool
+	Version     string
+	Accounts    []struct {
 		ID        string
 		Address   string
 		DraftCode string

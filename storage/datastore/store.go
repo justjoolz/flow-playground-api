@@ -212,9 +212,8 @@ func (d *Datastore) UpdateProject(input model.UpdateProject, proj *model.Interna
 		}
 
 		if input.Readme != nil {
-				proj.Readme = *input.Readme
+			proj.Readme = *input.Readme
 		}
-
 
 		if input.Persist != nil {
 			proj.Persist = *input.Persist
