@@ -454,6 +454,8 @@ func TestProjects(t *testing.T) {
 			MutationCreateProject,
 			&resp,
 			client.Var("title", "foo"),
+			client.Var("description", "bar"),
+			client.Var("readme", "bah"),
 			client.Var("seed", 42),
 		)
 		require.NoError(t, err)
@@ -483,6 +485,8 @@ func TestProjects(t *testing.T) {
 			MutationCreateProject,
 			&resp,
 			client.Var("title", "foo"),
+			client.Var("description", "desc"),
+			client.Var("readme", "rtfm"),
 			client.Var("seed", 42),
 			client.Var("accounts", accounts),
 		)
@@ -513,6 +517,8 @@ func TestProjects(t *testing.T) {
 			&resp,
 			client.Var("title", "foo"),
 			client.Var("seed", 42),
+			client.Var("description", "desc"),
+			client.Var("readme", "rtfm"),
 			client.Var("accounts", accounts),
 		)
 		require.NoError(t, err)
@@ -547,6 +553,8 @@ func TestProjects(t *testing.T) {
 			&resp,
 			client.Var("title", "foo"),
 			client.Var("seed", 42),
+			client.Var("description", "desc"),
+			client.Var("readme", "rtfm"),
 			client.Var("transactionTemplates", templates),
 		)
 		require.NoError(t, err)
@@ -1938,6 +1946,8 @@ func TestAuthentication(t *testing.T) {
 			MutationCreateProject,
 			&respA,
 			client.Var("title", "foo"),
+			client.Var("description", "desc"),
+			client.Var("readme", "rtfm"),
 			client.Var("seed", 42),
 			client.AddCookie(&malformedCookie),
 		)
@@ -2355,6 +2365,8 @@ func createProject(t *testing.T, c *Client) Project {
 		&resp,
 		client.Var("title", "foo"),
 		client.Var("seed", 42),
+		client.Var("description", "desc"),
+		client.Var("readme", "rtfm"),	
 		client.Var("accounts", []string{}),
 		client.Var("transactionTemplates", []string{}),
 	)
