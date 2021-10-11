@@ -25,6 +25,8 @@ import (
 	"github.com/Masterminds/semver"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
+
+	"github.com/microcosm-cc/bluemonday"
 )
 
 type InternalProject struct {
@@ -182,6 +184,9 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 		*version = p.Version.String()
 	}
 
+	bm := bluemonday.UGCPolicy()
+	safeReadme := bm.Sanitize(p.Readme,)
+
 	return []datastore.Property{
 		{
 			Name:  "ID",
@@ -213,7 +218,7 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 		},
 		{
 			Name:  "Readme",
-			Value: p.Readme,
+			Value: safeReadme,
 		},
 		{
 			Name:  "Seed",
