@@ -19,11 +19,13 @@
 package model
 
 import (
+	"fmt"
 	"time"
 
 	"cloud.google.com/go/datastore"
 	"github.com/Masterminds/semver"
 	"github.com/google/uuid"
+	"github.com/microcosm-cc/bluemonday"
 	"github.com/pkg/errors"
 )
 
@@ -181,6 +183,14 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 	if p.Version != nil {
 		*version = p.Version.String()
 	}
+
+	badString := `this is some text and inside a bab bad alert script <a onblur="alert(secret)" href="http://www.google.com">Google</a>`
+	fmt.Println("Malicious string BEFORE sanitization:")
+	fmt.Println(badString)
+	bm := bluemonday.UGCPolicy()
+	safeString := bm.Sanitize(badString)
+	fmt.Println("Malicious string AFTER sanitization:")
+	fmt.Println(safeString)
 
 	return []datastore.Property{
 		{
