@@ -185,10 +185,13 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 	}
 
 	bmUSC := bluemonday.UGCPolicy()
+	bmUSC.AllowImages()
+	bmUSC.AllowAttrs("src").OnElements("img")
+	fmt.Println("readme before sanitization:::::::::::::::::::::::::::::::")
+	fmt.Println(p.Readme)
 	bmStrict := bluemonday.StrictPolicy()
 	sanitizedTitle := bmStrict.Sanitize(p.Title)
 	sanitizedDescription := bmStrict.Sanitize(p.Description)
-	// configure the USC policy here...
 	sanitizedReadme := bmUSC.Sanitize(p.Readme)
 	fmt.Println("SANITIZED TITLE:::::::::::::::::::::::::::::::")
 	fmt.Println(sanitizedTitle)
