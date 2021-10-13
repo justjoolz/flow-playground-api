@@ -184,13 +184,18 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 		*version = p.Version.String()
 	}
 
-	badString := `this is some text and inside a bab bad alert script <a onblur="alert(secret)" href="http://www.google.com">Google</a>`
-	fmt.Println("Malicious string BEFORE sanitization:")
-	fmt.Println(badString)
-	bm := bluemonday.UGCPolicy()
-	safeString := bm.Sanitize(badString)
-	fmt.Println("Malicious string AFTER sanitization:")
-	fmt.Println(safeString)
+	bmUSC := bluemonday.UGCPolicy()
+	bmStrict := bluemonday.StrictPolicy()
+	sanitizedTitle := bmStrict.Sanitize(p.Title)
+	sanitizedDescription := bmStrict.Sanitize(p.Description)
+	// configure the USC policy here...
+	sanitizedReadme := bmUSC.Sanitize(p.Readme)
+	fmt.Println("SANITIZED TITLE:::::::::::::::::::::::::::::::")
+	fmt.Println(sanitizedTitle)
+	fmt.Println("SANITIZED DESCRIPTINO:::::::::::::::::::::::::::::::")
+	fmt.Println(sanitizedDescription)
+	fmt.Println("SANITIZED README:::::::::::::::::::::::::::::::")
+	fmt.Println(sanitizedReadme)
 
 	return []datastore.Property{
 		{
@@ -215,15 +220,15 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 		},
 		{
 			Name:  "Title",
-			Value: p.Title,
+			Value: sanitizedTitle,
 		},
 		{
 			Name:  "Description",
-			Value: p.Description,
+			Value: sanitizedDescription,
 		},
 		{
 			Name:  "Readme",
-			Value: p.Readme,
+			Value: sanitizedReadme,
 		},
 		{
 			Name:  "Seed",
