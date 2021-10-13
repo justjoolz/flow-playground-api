@@ -19,7 +19,6 @@
 package model
 
 import (
-	"fmt"
 	"time"
 
 	"cloud.google.com/go/datastore"
@@ -184,21 +183,16 @@ func (p *InternalProject) Save() ([]datastore.Property, error) {
 		*version = p.Version.String()
 	}
 
+	// blueMonday policy building: https://github.com/microcosm-cc/bluemonday#policy-building
 	bmUSC := bluemonday.UGCPolicy()
 	bmUSC.AllowImages()
 	bmUSC.AllowAttrs("src").OnElements("img")
-	fmt.Println("readme before sanitization:::::::::::::::::::::::::::::::")
-	fmt.Println(p.Readme)
+
 	bmStrict := bluemonday.StrictPolicy()
+
 	sanitizedTitle := bmStrict.Sanitize(p.Title)
 	sanitizedDescription := bmStrict.Sanitize(p.Description)
 	sanitizedReadme := bmUSC.Sanitize(p.Readme)
-	fmt.Println("SANITIZED TITLE:::::::::::::::::::::::::::::::")
-	fmt.Println(sanitizedTitle)
-	fmt.Println("SANITIZED DESCRIPTINO:::::::::::::::::::::::::::::::")
-	fmt.Println(sanitizedDescription)
-	fmt.Println("SANITIZED README:::::::::::::::::::::::::::::::")
-	fmt.Println(sanitizedReadme)
 
 	return []datastore.Property{
 		{
